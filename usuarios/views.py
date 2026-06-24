@@ -1,11 +1,40 @@
 from django.shortcuts import render, redirect
-from .forms import RegistroForm
+
+from django.contrib.auth.models import Group
+
+from .forms import RegistroUsuarioForm
+
 
 def registro(request):
-    form = RegistroForm(request.POST or None)
 
-    if form.is_valid():
-        form.save()
-        return redirect('login')
+    if request.method == 'POST':
 
-    return render(request, 'usuarios/registro.html', {'form': form})
+        form = RegistroUsuarioForm(
+            request.POST
+        )
+
+        if form.is_valid():
+
+            usuario = form.save()
+
+            grupo_clientes = Group.objects.get(
+                name='Clientes'
+            )
+
+            usuario.groups.add(
+                grupo_clientes
+            )
+
+            return redirect(
+                'login'
+            )
+
+    else:
+
+        form = RegistroUsuarioForm()
+
+    return render(
+        request,
+        'registration/registro.html',
+        {'form': form}
+    )
