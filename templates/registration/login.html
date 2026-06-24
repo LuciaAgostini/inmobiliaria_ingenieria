@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Iniciar sesión</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <label>Usuario:</label>
+    <input type="text" name="username">
+
+    <br><br>
+
+    <label>Contraseña:</label>
+    <input type="password" name="password">
+
+    <br><br>
+
+    <button type="submit">Ingresar</button>
+</form>
+
+{% if form.errors %}
+<p style="color:red;">Usuario o contraseña incorrectos</p>
+{% endif %}
+
+{% endblock %}

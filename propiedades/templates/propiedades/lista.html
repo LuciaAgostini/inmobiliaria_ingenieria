@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Propiedades{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4 fw-bold">Propiedades disponibles</h2>
+
+{% if user.is_staff %}
+<a href="{% url 'crear_propiedad' %}" class="btn btn-success mb-3">
+    + Nueva propiedad
+</a>
+{% endif %}
+
+<div class="row">
+
+    {% for propiedad in propiedades %}
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card card-hover shadow-sm border-0">
+
+            {% if propiedad.imagen %}
+            <img src="{{ propiedad.imagen.url }}" class="card-img-top property-img">
+            {% else %}
+            <img src="https://via.placeholder.com/400x250" class="card-img-top property-img">
+            {% endif %}
+
+            <div class="card-body">
+
+                <h5 class="fw-bold">{{ propiedad.titulo }}</h5>
+
+                <p class="text-muted small">
+                    {{ propiedad.descripcion|truncatechars:90 }}
+                </p>
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <span class="fw-bold text-success fs-5">
+                        ${{ propiedad.precio }}
+                    </span>
+
+                    <a href="#" class="btn btn-primary btn-sm">
+                        Ver más
+                    </a>
+
+                </div>
+
+                {% if user.is_staff %}
+                <hr>
+                <div class="d-flex gap-2">
+
+                    <a href="{% url 'editar_propiedad' propiedad.id %}" class="btn btn-outline-warning btn-sm">
+                        Editar
+                    </a>
+
+                    <a href="{% url 'eliminar_propiedad' propiedad.id %}" class="btn btn-outline-danger btn-sm">
+                        Eliminar
+                    </a>
+
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

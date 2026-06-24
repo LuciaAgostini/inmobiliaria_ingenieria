@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>🏢 Propiedades Disponibles</h1>
+
+<a href="{% url 'crear_propiedad' %}" style="display: inline-block; padding: 10px 15px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; margin-bottom: 20px;">
+    ➕ Crear Nueva Propiedad
+</a>
+
+<hr>
+
+<ul style="list-style: none; padding: 0;">
+{% for p in propiedades %}
+    <li style="background: #fdfdfd; border: 1px solid #e0e0e0; border-radius: 6px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <h3 style="margin: 0 0 10px 0; color: #333;">
+            {{ p.titulo }} <span style="color: #28a745; font-weight: normal; margin-left: 10px;">(${{ p.precio }})</span>
+        </h3>
+
+        {% if p.imagen %}
+            <div style="margin-bottom: 10px;">
+                <img src="{{ p.imagen.url }}" alt="{{ p.titulo }}" style="max-width: 180px; height: auto; border-radius: 4px; display: block; border: 1px solid #ddd;">
+            </div>
+        {% endif %}
+
+        <div style="margin-top: 10px; font-size: 0.9em;">
+            <a href="{% url 'editar_propiedad' p.id %}" style="color: #007bff; text-decoration: none; font-weight: bold; margin-right: 15px;">✏️ Editar</a>
+            <a href="{% url 'eliminar_propiedad' p.id %}" style="color: #dc3545; text-decoration: none; font-weight: bold;">🗑️ Eliminar</a>
+        </div>
+    </li>
+{% empty %}
+    <li style="color: #666; font-style: italic; background: #f8f9fa; padding: 15px; border-radius: 4px; text-align: center;">
+        No hay propiedades registradas por el momento.
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
