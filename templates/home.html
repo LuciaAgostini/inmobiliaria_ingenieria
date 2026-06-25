@@ -1,9 +1,50 @@
 {% extends 'base.html' %}
 
+{% block title %}Inicio{% endblock %}
+
 {% block content %}
-<h1>🏠 Bienvenido a la Inmobiliaria</h1>
 
-<p>Sistema de gestión de propiedades</p>
+<div class="hero">
+    <h1>🏡 Inmobiliaria San Martín</h1>
+    <p>
+        Casas, departamentos y terrenos con asesoramiento profesional.
+    </p>
+</div>
 
-<a href="{% url 'lista_propiedades' %}">Ver propiedades</a>
+<div class="grid">
+
+    <!-- PROPIEDADES -->
+    <a href="{% url 'lista_propiedades' %}" style="text-decoration:none; color:inherit;">
+        <div class="card">
+            <h2>🏠 Propiedades</h2>
+            <p>Casas, departamentos y terrenos disponibles.</p>
+        </div>
+    </a>
+
+    <!-- CLIENTES -->
+    <a href="{% url 'lista_clientes' %}" style="text-decoration:none; color:inherit;">
+        <div class="card">
+            <h2>👥 Clientes</h2>
+            <p>Gestión de clientes registrados y seguimiento.</p>
+        </div>
+    </a>
+
+    <!-- ATENCIÓN -->
+    <a href="{% url 'atencion' %}" style="text-decoration:none; color:inherit;">
+        <div class="card">
+            <h2>📞 Atención</h2>
+            <p>Asesoramiento personalizado para clientes.</p>
+        </div>
+    </a>
+
+    <!-- USUARIOS -->
+    <a href="{% url 'registro' %}" style="text-decoration:none; color:inherit;">
+        <div class="card">
+            <h2>🔐 Usuarios</h2>
+            <p>Clientes y agentes con distintos permisos.</p>
+        </div>
+    </a>
+
+</div>
+
 {% endblock %}

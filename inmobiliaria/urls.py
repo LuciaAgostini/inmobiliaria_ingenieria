@@ -1,37 +1,20 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-
-from propiedades.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', home, name='home'),
+    # App propiedades
+    path('', include('propiedades.urls')),
 
-    path('propiedades/', include('propiedades.urls')),
-    path('clientes/', include('clientes.urls')),
+    # App usuarios
     path('', include('usuarios.urls')),
 
-    path(
-        'login/',
-        auth_views.LoginView.as_view(
-            template_name='registration/login.html'
-        ),
-        name='login'
-    ),
-
-    path(
-        'logout/',
-        auth_views.LogoutView.as_view(),
-        name='logout'
-    ),
+    # App clientes
+    path('clientes/', include('clientes.urls')),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
-    )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

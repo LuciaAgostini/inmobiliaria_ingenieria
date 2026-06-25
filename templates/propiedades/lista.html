@@ -1,45 +1,77 @@
 {% extends 'base.html' %}
 
-{% block contenido %}
+{% block title %}Propiedades{% endblock %}
 
-<h2>Propiedades</h2>
+{% block content %}
+
+<h2 class="mb-4">🏠 Propiedades Disponibles</h2>
 
 {% if perms.propiedades.add_propiedad %}
-<a href="{% url 'crear_propiedad' %}">
-    Nueva Propiedad
+<a href="{% url 'crear_propiedad' %}" class="btn btn-success mb-3">
+    ➕ Nueva Propiedad
 </a>
 {% endif %}
 
+<div class="row">
+
 {% for propiedad in propiedades %}
 
-<div class="card">
+<div class="col-md-4 mb-4">
 
-    {% if propiedad.imagen %}
-        <img
-            src="{{ propiedad.imagen.url }}"
-            width="250">
-    {% endif %}
+    <div class="card shadow card-hover">
 
-    <h3>{{ propiedad.titulo }}</h3>
+        {% if propiedad.imagen %}
+        <img src="{{ propiedad.imagen.url }}" class="card-img-top" style="height:200px; object-fit:cover;">
+        {% endif %}
 
-    <p>{{ propiedad.descripcion }}</p>
+        <div class="card-body">
 
-    <p>${{ propiedad.precio }}</p>
+            <h5>{{ propiedad.titulo }}</h5>
 
-    {% if perms.propiedades.change_propiedad %}
-        <a href="{% url 'editar_propiedad' propiedad.id %}">
-            Editar
-        </a>
-    {% endif %}
+            <p>{{ propiedad.descripcion|truncatewords:15 }}</p>
 
-    {% if perms.propiedades.delete_propiedad %}
-        <a href="{% url 'eliminar_propiedad' propiedad.id %}">
-            Eliminar
-        </a>
-    {% endif %}
+            <h4 style="color:green;">
+                ${{ propiedad.precio }}
+            </h4>
+
+            {% if propiedad.tipo %}
+            <p>
+                <strong>🏷️ Tipo:</strong> {{ propiedad.tipo }}
+            </p>
+            {% endif %}
+
+            {% if propiedad.operacion %}
+            <p>
+                <strong>📌 Operación:</strong> {{ propiedad.operacion }}
+            </p>
+            {% endif %}
+
+            <button class="btn btn-primary w-100">
+                📩 Solicitar Información
+            </button>
+
+            <hr>
+
+            {% if perms.propiedades.change_propiedad %}
+            <a href="{% url 'editar_propiedad' propiedad.id %}" class="btn btn-warning btn-sm">
+                ✏️ Editar
+            </a>
+            {% endif %}
+
+            {% if perms.propiedades.delete_propiedad %}
+            <a href="{% url 'eliminar_propiedad' propiedad.id %}" class="btn btn-danger btn-sm">
+                🗑️ Eliminar
+            </a>
+            {% endif %}
+
+        </div>
+
+    </div>
 
 </div>
 
 {% endfor %}
+
+</div>
 
 {% endblock %}

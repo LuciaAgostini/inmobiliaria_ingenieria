@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 
@@ -11,9 +11,9 @@ def home(request):
 
 
 @login_required
-@permission_required('propiedades.view_propiedad', raise_exception=True)
 def lista_propiedades(request):
     propiedades = Propiedad.objects.all()
+
     return render(request, 'propiedades/lista.html', {
         'propiedades': propiedades
     })
@@ -65,3 +65,7 @@ def eliminar_propiedad(request, pk):
     return render(request, 'propiedades/eliminar.html', {
         'propiedad': propiedad
     })
+
+
+def atencion(request):
+    return render(request, 'atencion.html')

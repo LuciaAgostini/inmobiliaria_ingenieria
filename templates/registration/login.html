@@ -1,26 +1,29 @@
 {% extends "base.html" %}
 
+{% block title %}Iniciar sesión{% endblock %}
+
 {% block content %}
-<h2>Iniciar sesión</h2>
+<div style="max-width:450px; margin:auto; background:white; padding:30px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+    <h2>Iniciar sesión</h2>
 
-<form method="post">
-    {% csrf_token %}
-    
-    <label>Usuario:</label>
-    <input type="text" name="username">
+    <form method="post">
+        {% csrf_token %}
 
-    <br><br>
+        <p>
+            <label for="id_username">Usuario:</label><br>
+            <input type="text" name="username" id="id_username" required>
+        </p>
 
-    <label>Contraseña:</label>
-    <input type="password" name="password">
+        <p>
+            <label for="id_password">Contraseña:</label><br>
+            <input type="password" name="password" id="id_password" required>
+        </p>
 
-    <br><br>
+        <button type="submit" class="btn">Ingresar</button>
+    </form>
 
-    <button type="submit">Ingresar</button>
-</form>
-
-{% if form.errors %}
-<p style="color:red;">Usuario o contraseña incorrectos</p>
-{% endif %}
-
+    {% if form.errors %}
+        <p style="color:red; margin-top:15px;">Usuario o contraseña incorrectos.</p>
+    {% endif %}
+</div>
 {% endblock %}
